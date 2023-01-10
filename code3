@@ -1,1 +1,12 @@
 this is a test file
+
+<html>
+<head>
+<title>Devops Accademy</titile>
+</head>
+<body>
+<h1> this is Devops learning</h1>
+<h2>we are learning git</h2>
+<h3>this is the test practice</h3>
+</body>
+</html>
