@@ -1,0 +1,109 @@
+35.77.81.200
+
+Instance ID
+i-0f1c0bfd5bddff812 (Demo)
+Open an SSH client.
+
+Locate your private key file. The key used to launch this instance is Devops.pem
+
+Run this command, if necessary, to ensure your key is not publicly viewable.
+ chmod 400 Devops.pem
+
+Connect to your instance using its Public DNS:
+ ec2-54-178-24-14.ap-northeast-1.compute.amazonaws.com
+
+Example:
+
+ ssh -i "Devops.pem" ec2-user@ec2-54-178-24-14.ap-northeast-1.compute.amazonaws.com
+ 
+ 
+ rhel8 jenkins[4310]: WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+Jan 02 09:39:36 rhel8 jenkins[4310]: WARNING: All illegal access operations will be denied in a future release
+
+github2329
+
+https://github.com/kumarcc1/Devops.git
+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
+
+Instance ID
+i-0b3202ac788db1e76 (MJSERVER)
+Open an SSH client.
+
+Locate your private key file. The key used to launch this instance is MJSERVER.pem
+
+Run this command, if necessary, to ensure your key is not publicly viewable.
+ chmod 400 MJSERVER.pem
+
+Connect to your instance using its Public DNS:
+ ec2-52-196-166-170.ap-northeast-1.compute.amazonaws.com
+
+Example:
+
+ ssh -i "MJSERVER.pem" ec2-user@ec2-52-196-166-170.ap-northeast-1.compute.amazonaws.com
+ 
+ https://www.youtube.com/watch?v=hQcFE0RD0cQ&list=PL9ooVrP1hQOE5ZDJJsnEXZ2upwK7aTYiX&index=3
+ 
+ 
+ https://www.ibm.com/docs/en/cloud-orchestrator/2.5.0?topic=reference-password-authentication-amazon-ec2-images
+ 
+ Password authentication on Amazon EC2 images
+Last Updated: 2021-03-09
+
+You can allow password authentication on Amazon EC2 images.
+
+Usually, Amazon Linux images have password and root login disabled by default. Amazon AWS EC2 recommends to use SSH keys to access the images. The images are usually also sudo enabled.
+You can enable password and root login using the following procedure:
+Update the cloud-init configuration file to allow root access and password login.
+Update the authorized_keys file.
+Update the sshd_config file to enable password authentication and root login.
+Note: Future Amazon updates to the images might require changes to the procedure.
+Update the cloud-init configuration file
+Make sure that the following lines are in the /etc/cloud/cloud.cfg file:
+disable_root: false
+ssh_pwauth:   true
+
+These properties enable root login and password authentication in cloud-init. They are required to set the password via user-data.
+Update the authorized_keys file
+In the authorized_keys file, remove the command prefix and leave only the ssh-rsa statement. For example, change the following default content:
+no-port-forwarding,no-agent-forwarding,no-X11-forwarding,command="echo 'Please login 
+as the user \"ec2-user\" rather than the user \"root\".';echo;sleep 10" 
+ssh-rsa <content of sshkey>
+
+to the following content:
+ssh-rsa <content of sshkey>
+
+Update the sshd_config file
+Log on to the Amazon EC2 image by using SSH and complete the following steps:
+Edit the /etc/ssh/sshd_config file.
+Update the following lines:
+PasswordAuthentication yes
+PermitRootLogin yes
+
+Save the file.
+Run the following command:
+sudo service sshd restart
+---------------------------------------------------------------------------------------
+
+From the target slave node's console
+
+Switch to the root user:
+sudo su
+Add a jenkins user with the home /var/lib/jenkins (Note: I am keeping my home directory in /var/lib/jenkins):
+useradd -d /var/lib/jenkins jenkins
+From the Jenkins Master
+
+Copy the /var/lib/jenkins/.ssh/id_rsa.pub key from the Jenkins user on the master
+
+From the target slave node's console
+
+Create an authorized_keys file for the Jenkins user
+mkdir /var/lib/jenkins/.ssh
+touch /var/lib/jenkins/.ssh/authorized_keys
+Paste the key from the Jenkins master into the file vim. Save with :wq!
+
+Make sure the files have correct owner and permission.
+chown -R jenkins /var/lib/jenkins/.ssh
+chmod 600 /var/lib/jenkins/.ssh/authorized_keys
+chmod 700 /var/lib/jenkins/.ssh
+----------------------------------------------------------------------------------------------------
+
